@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <title>Minimal example of asking for access tokens via Netlify's OAuth2 API</title>
+  <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body>
+  <h1>This is a simple example of using Netlify as an OAuth2 provider</h1>
+
+  <div id="step-1" class="step">
+    <h2>Step 1: Register your OAuth App</h2>
+
+    <p>
+      Start by going to <a href="https://app.netlify.com/applications" target="_blank">https://app.netlify.com/applications</a>
+      and create a new OAuth Application.
+    </p>
+    <p>
+      Make sure you enter <div id="current-url"></div> as the <strong>Redirect URI</strong> for your new app.
+    </p>
+    <p>
+      Once your're done, enter the Client ID of your new application here:
+      <form id="client-id-form">
+        <input id="client-id" type="text"/>
+        <button>Submit</button>
+      </form>
+    </p>
+  </div>
+
+  <div id="step-2" class="step">
+    <h2>Step 2: Authorize with Netlify</h2>
+
+    <p>
+      <a id="auth-url" href="#">Click here to authorize with netlify</a>
+    </p>
+  </div>
+
+  <div id="step-3" class="step">
+    <h2>Step 3: Make API calls</h2>
+
+    <p id="output">Loading sites for this user...</p>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
