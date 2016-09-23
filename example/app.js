@@ -17,8 +17,7 @@ function submitClientId(e) {
     // We're stripping the trailing slash just in case you added
     // the site URL without trailing slash when creating the App
     var redirectURI = document.location.href.replace(/\/(#.*)?$/, '')
-    //authLink.href = 'https://app.netlify.com/authorize?' +
-    authLink.href = 'http://localhost:8080/authorize?' +
+    authLink.href = 'https://app.netlify.com/authorize?' +
         'client_id=' + clientId +
         '&response_type=token' +
         '&redirect_uri=' + redirectURI;
