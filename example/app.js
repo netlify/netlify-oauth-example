@@ -1,14 +1,19 @@
-const params        = document.location.hash;
+/*
+ * Get various elements used during the demo from the DOM
+ */
+const hash        = document.location.hash;
 const currentUrlEl  = document.getElementById('current-url');
 const clientIdForm  = document.getElementById('client-id-form');
 const clientIdInput = document.getElementById('client-id');
 const authLink      = document.getElementById('auth-url');
 
-function setCurrentStep(step) {
-  Array.from(document.querySelectorAll('.visible')).forEach((el) => el.classList.remove('visible'));
-  document.getElementById('step-' + step).classList.add('visible');
-}
 
+/*
+ * Handler for the client ID input field.
+ *
+ * Just used for this demo to get the Client ID for the newly registered app.
+ * Normally your Client ID would be stored in a configuration file.
+ */
 function submitClientId(e) {
   e.preventDefault();
 
@@ -25,10 +30,18 @@ function submitClientId(e) {
   }
 }
 
+
+/*
+ * This function is called when a user returns from Netlify and has accepted the
+ * request to authorize your app.
+ *
+ * It extracts the token from the response and use it to do a simple API request
+ * fetching the latest sites from the user from Netlify.
+ */
 function handleAccessToken() {
   // The access token is returned in the hash part of the document.location
   //   #access_token=1234&response_type=token
-  const response = params.replace(/^#/, '').split('&').reduce((result, pair) => {
+  const response = hash.replace(/^#/, '').split('&').reduce((result, pair) => {
     const keyValue = pair.split('=');
     result[keyValue[0]] = keyValue[1];
     return result;
@@ -51,16 +64,40 @@ function handleAccessToken() {
   });
 }
 
+
+/*
+ * Small helper method to change the current step and show the right element
+ */
+function setCurrentStep(step) {
+  Array.from(document.querySelectorAll('.visible')).forEach((el) => el.classList.remove('visible'));
+  document.getElementById('step-' + step).classList.add('visible');
+}
+
+
+/*
+ * Small helper method to show some output in the last step of the flow
+ */
 function showOutput(text) {
   document.getElementById('output').innerHTML = text;
 }
 
-currentUrlEl.textContent = document.location.href;
-clientIdForm.addEventListener('submit', submitClientId, false);
 
-if (params) {
+/*
+ * The Oauth2 implicit grant flow works by sending the user to Netlify where she'll
+ * be asked to grant authorization to your application. Netlify will then redirect
+ * back to the Redirect URI on file for your app and set an access_token paramter
+ * in the "hash" part of the URL.
+ *
+ * If we have any hash, it's because the user is coming back from Netlify and we
+ * can start doing API requests on their behalf.
+ *
+ * If not, we'll trigger the first step and prepare to send the user to Netlify.
+ */
+if (hash) {
   setCurrentStep(3);
   handleAccessToken();
 } else {
+  currentUrlEl.textContent = document.location.href;
+  clientIdForm.addEventListener('submit', submitClientId, false);
   setCurrentStep(1);
 }
