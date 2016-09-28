@@ -7,6 +7,11 @@ const clientIdForm  = document.getElementById('client-id-form');
 const clientIdInput = document.getElementById('client-id');
 const authLink      = document.getElementById('auth-url');
 
+/*
+ * The state variable is used to guard against CSRF attacks as described in:
+ * https://tools.ietf.org/html/rfc6749#section-10.12
+ */
+let state = null;
 
 /*
  * Handler for the client ID input field.
@@ -25,7 +30,8 @@ function submitClientId(e) {
     authLink.href = 'https://app.netlify.com/authorize?' +
         'client_id=' + clientId +
         '&response_type=token' +
-        '&redirect_uri=' + redirectURI;
+        '&redirect_uri=' + redirectURI +
+        '&state=' + state;
     setCurrentStep(2);
   }
 }
@@ -47,8 +53,17 @@ function handleAccessToken() {
     return result;
   }, {});
 
-  // Remove the token so it's not visible in the URL
+  // Remove the token so it's not visible in the URL after we're done
   document.location.hash = '';
+
+  if (!localStorage.getItem(response.state)) {
+    // We need to verify the random state we set before starting the request,
+    // otherwise this could be an access token from someone else than our user
+    alert("CSRF Attack");
+    return;
+  }
+
+  localStorage.removeItem(response.state);
 
   // User the token to fetch the list of sites for the user
   fetch('https://api.netlify.com/api/v1/sites', {
@@ -100,4 +115,9 @@ if (hash) {
   currentUrlEl.textContent = document.location.href;
   clientIdForm.addEventListener('submit', submitClientId, false);
   setCurrentStep(1);
+
+  // We generate a random state that we'll validate when Netlify redirects back to
+  // our app.
+  state = Math.random();
+  localStorage.setItem(state, true);
 }
