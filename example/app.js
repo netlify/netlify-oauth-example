@@ -36,7 +36,7 @@ function submitClientId(e) {
         '&response_type=token' +
         '&redirect_uri=' + encodeURIComponent(redirectURI) +
         '&state=' + state +
-        '&repository=https://github.com/calavera/template-test' +
+        '&repository=https://github.com/biilmann/contentful-deploy-demo' +
         '#CONTENTFUL_TOKEN=' + encodeURIComponent(contentfulToken);
     setCurrentStep(2);
   }
