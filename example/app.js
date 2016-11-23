@@ -6,7 +6,7 @@ const search      = document.location.search;
 const currentUrlEl  = document.getElementById('current-url');
 const clientIdForm  = document.getElementById('client-id-form');
 const clientIdInput = document.getElementById('client-id');
-const contentfulTokenInput = document.getElementById('contentful-token');
+const datoCMSTokenInput = document.getElementById('dato-cms-token');
 const authLink      = document.getElementById('auth-url');
 const appURL = 'https://deploy-preview-374--app.netlify.com';
 
@@ -26,7 +26,7 @@ function submitClientId(e) {
   e.preventDefault();
 
   var clientId = clientIdInput.value;
-  var contentfulToken = contentfulTokenInput.value;
+  var datoCMSToken = datoCMSTokenInput.value;
   if (clientId) {
     // We're stripping the trailing slash just in case you added
     // the site URL without trailing slash when creating the App
@@ -36,8 +36,8 @@ function submitClientId(e) {
         '&response_type=token' +
         '&redirect_uri=' + encodeURIComponent(redirectURI) +
         '&state=' + state +
-        '&repository=https://github.com/biilmann/contentful-deploy-demo' +
-        '#CONTENTFUL_TOKEN=' + encodeURIComponent(contentfulToken);
+        '&repository=https://github.com/biilmann/dato-cms-deploy-demo' +
+        '#DATO_CMS_TOKEN=' + encodeURIComponent(datoCMSToken);
     setCurrentStep(2);
   }
 }
