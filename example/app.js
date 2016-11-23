@@ -8,7 +8,7 @@ const clientIdForm  = document.getElementById('client-id-form');
 const clientIdInput = document.getElementById('client-id');
 const datoCMSTokenInput = document.getElementById('dato-cms-token');
 const authLink      = document.getElementById('auth-url');
-const appURL = 'https://deploy-preview-374--app.netlify.com';
+const appURL = 'https://app.netlify.com';
 
 /*
  * The state variable is used to guard against CSRF attacks as described in:
