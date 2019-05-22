@@ -1,3 +1,6 @@
+> See updated OAuth example [here](https://github.com/netlify-labs/oauth-example)
+
+
 # Example of using Netlify's OAuth2 Provider
 
 This demo will show how to ask a user to authorize your app with Netlify, and get
