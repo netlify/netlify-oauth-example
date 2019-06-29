@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="/styles.css"/>
 </head>
 <body>
-  <h1>This is a simple example of using Netlify as an OAuth2 provider</h1>
+  <h1>This is a simple example of a "deploy to Netlify" flow</h1>
 
   <div id="step-1" class="step">
     <h2>Step 1: Register your OAuth App</h2>
@@ -20,17 +20,26 @@
     <p>
       Once your're done, enter the Client ID of your new application here:
       <form id="client-id-form">
-        <input id="client-id" type="text"/>
+        <input id="client-id" type="text" placeholder="Client ID"/>
+
+        <p>
+          The site we're creating will also need a CONTENTFUL_TOKEN environment variable.
+          Set the value of that token here before clicking the link below
+          (it doesn't need to be a valid token for the purpose of this demo).
+        </p>
+
+        <input id="contentful-token" placeholder="Contentful API Token" type="text">
+
         <button>Submit</button>
       </form>
     </p>
   </div>
 
   <div id="step-2" class="step">
-    <h2>Step 2: Authorize with Netlify</h2>
+    <h2>Step 2: Create a new site with Netlify</h2>
 
     <p>
-      <a id="auth-url" href="#">Click here to authorize with netlify</a>
+      <a id="auth-url" href="#"><img src="https://www.netlify.com/img/deploy/button.svg"></a>
     </p>
   </div>
 
@@ -39,6 +48,10 @@
 
     <p id="output">Loading sites for this user...</p>
   </div>
+
+  <br>
+
+  <p>Source code: <a target="_blank" href="https://github.com/netlify/netlify-oauth-example/tree/contentful-example">github.com/netlify/netlify-oauth-example</a></p>
 
   <script src="/app.js"></script>
 </body>
